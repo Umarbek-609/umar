@@ -1,0 +1,14 @@
+# Ignore all migration files
+**/migrations/*.py
+**/migrations/*.pyc
+
+# Keep __init__.py files so the folders are treated as packages
+!**/migrations/__init__.py
+
+__pycache__/
+
+.env
+
+# Translations
+*.mo
+*.pot
