@@ -1,5 +1,6 @@
 from django.db import models
 from parler.models import TranslatableModel,TranslatedFields
+from django.db.models import Avg
 
 class Course(TranslatableModel):
 
@@ -13,13 +14,19 @@ class Course(TranslatableModel):
     )
     image = models.ImageField(upload_to='course_image/')
     price = models.FloatField()
-    instructor = models.ForeignKey('user.Instructor',on_delete=models.CASCADE)
+    instructor = models.ForeignKey('user.User',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    average_rating = models.FloatField(default=0)
 
     def __str__(self):
         return self.safe_translation_getter('title',any_language=True)
     
+    def update_rating(self):
+
+        avg = self.ratings.aggregate(Avg('rating'))['rating__avg'] or 0
+        self.average_rating = round(avg, 1)
+        self.save(update_fields=['average_rating'])
 
 
 class Lessons(TranslatableModel):
