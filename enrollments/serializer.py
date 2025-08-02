@@ -1,9 +1,15 @@
 from rest_framework import serializers
 from .models import Enroll
+from parler_rest.serializers import TranslatableModelSerializer,TranslatedFieldsField
 
-class EnrollSerializer(serializers.ModelSerializer):
-    model = Enroll
-    fields = '__all__'
+class EnrollSerializer(TranslatableModelSerializer):
+    translations = TranslatedFieldsField(shared_model=Enroll)
+
+    class Meta:
+        model = Enroll
+        fields = '__all__'
+
+
 
     def validate(self,data):
         user = self.context['request'].user
