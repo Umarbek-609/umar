@@ -7,5 +7,12 @@ from rest_framework.permissions import IsAuthenticated
 class EnrollView(ModelViewSet):
     queryset = Enroll.objects.all()
     serializer_class = EnrollSerializer
-    permission_classes = [IsAuthenticated(),'IsStudent']
+    permission_classes = [IsAuthenticated()]
+    
+
+    def get_queryset(self):
+        user = self.request.user
+        if user.is_staff:
+            return Enroll.objects.all()
+        return Enroll.objects.filter(user=user)
     
