@@ -1,4 +1,4 @@
-from .serializer import RegisterSerializer,ProfileSerializer,ResetPasswordRequestSerializer,ResetPasswordSerializer
+from .serializer import RegisterSerializer,ProfileSerializer,ResetPasswordSerializer
 from rest_framework.response import Response
 from .models import CustomUser
 from rest_framework.viewsets import ViewSet,ModelViewSet
@@ -26,32 +26,11 @@ class ProfileViewSet(ModelViewSet):
         serializer.save()
         return Response({"user":"updated"})
     
-class RequestPasswordReset(generics.GenericAPIView):
-    permission_classes = [AllowAny]
-    serializer_class = ResetPasswordRequestSerializer
-
-    def post(self, request):
-        serializer = self.serializer_class(data=request.data)
-        email = request.data['email']
-        user = CustomUser.objects.filter(email__iexact=email).first()
-
-        if user:
-            token_generator = PasswordResetTokenGenerator()
-            token = token_generator.make_token(user) 
-            reset = PasswordReset(email=email, token=token)
-            reset.save()
-
-            reset_url = f"{os.environ['PASSWORD_RESET_BASE_URL']}/{token}"
-
-
-            return Response({'success': 'We have sent you a link to reset your password'}, status=status.HTTP_200_OK)
-        else:
-            return Response({"error": "User with credentials not found"}, status=status.HTTP_404_NOT_FOUND)
 
 class ResetPassword(generics.GenericAPIView):
     serializer_class = ResetPasswordSerializer
 
-    def post(self, request, token):
+    def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.validated_data
@@ -62,7 +41,7 @@ class ResetPassword(generics.GenericAPIView):
         if new_password != confirm_password:
             return Response({"error": "Passwords do not match"}, status=400)
         
-        reset_obj = PasswordReset.objects.filter(token=token).first()
+        reset_obj = PasswordReset.objects.filter().first()
         
         if not reset_obj:
             return Response({'error':'Invalid token'}, status=400)
