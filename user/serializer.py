@@ -1,12 +1,17 @@
+from django.contrib.auth import get_user_model
+from django.core.mail import send_mail
+from django.utils.crypto import get_random_string
 from rest_framework import serializers
 from .models import CustomUser
 from django.core.mail import send_mail
 from django.conf import settings 
+User = get_user_model()
 
 
 class RegisterSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True, min_length=8)
     password2 = serializers.CharField(write_only=True, min_length=8)
+    email = serializers.EmailField()
 
     class Meta:
         model = CustomUser
@@ -22,6 +27,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password1'],
+            user_type=validated_data['user_type'],
         )
         send_mail(
             message ="bemalol saitdan foydalaning",
@@ -48,3 +54,16 @@ class ResetPasswordSerializer(serializers.Serializer):
         error_messages={'invalid': ('Password must be at least 8 characters long with at least one capital letter and symbol')}
     )
     confirm_password = serializers.CharField(write_only=True, required=True)
+
+
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+
+
+
+
+
+
+
