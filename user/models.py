@@ -5,7 +5,7 @@ from .manager import InstructorManager,StudentManager
 
 class CustomUser(AbstractUser):
     class UserTypeEnum(models.TextChoices):
-        Instructor = 'teacher', _('instructor')
+        INSTRUCTOR = 'instructor', _('Instructor')
         STUDENT = 'student', _('Student')
     user_type = models.CharField(verbose_name=_("user_type"),max_length=100,choices=UserTypeEnum.choices,
                                 default=UserTypeEnum.STUDENT,blank=True)
@@ -21,7 +21,7 @@ class Instructor(CustomUser):
 
     class Meta:
         proxy = True
-        verbose_name=_("instructor")
+        verbose_name=_("Instructor")
 
 class Student(CustomUser):
     objects = StudentManager ()
