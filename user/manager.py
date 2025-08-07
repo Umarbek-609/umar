@@ -1,9 +1,9 @@
 from django.contrib.auth.models import BaseUserManager
 
-class TeacherManager(BaseUserManager):
+class InstructorManager(BaseUserManager):
     def get_queryset(self):
-        return super().get_queryset().filter(user_type='teacher')
+        return super().get_queryset().filter(user_type='instructor')
     
-class StudentrManager(BaseUserManager):
+class StudentManager(BaseUserManager):
     def get_queryset(self):
         return super().get_queryset().filter(user_type='student')
