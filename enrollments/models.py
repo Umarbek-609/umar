@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from user.models import CustomUser
 
 class Enroll(models.Model):
-    user = models.ForeignKey('user.CustomUser',on_delete=models.CASCADE,verbose_name=_('Student'))
-    course = models.ForeignKey('course.Course',on_delete=models.CASCADE,verbose_name=_('Course'))
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE,verbose_name=_('Student'))
+    course = models.ForeignKey(CustomUser,on_delete=models.CASCADE,verbose_name=_('Course'))
     enrolled_at = models.DateTimeField(verbose_name=_("shu vaqt"),auto_now_add=True)
     last_accessed = models.DateTimeField(verbose_name=_("last_accessed"),auto_now=True)
     progress = models.IntegerField(verbose_name=_("progress"),default=0)

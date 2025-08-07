@@ -1,9 +1,7 @@
 from rest_framework import serializers
 from .models import Enroll
-from parler_rest.serializers import TranslatableModelSerializer,TranslatedFieldsField
 
-class EnrollSerializer(TranslatableModelSerializer):
-    translations = TranslatedFieldsField(shared_model=Enroll)
+class EnrollSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Enroll
