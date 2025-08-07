@@ -14,7 +14,7 @@ class Course(TranslatableModel):
     )
     image = models.ImageField(upload_to='course_image/')
     price = models.FloatField()
-    # instructor = models.ForeignKey('user',on_delete=models.CASCADE)
+    instructor = models.ForeignKey('user.Insturctor',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     average_rating = models.FloatField(default=0)
