@@ -148,6 +148,15 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'umarbekumarbekumarbek777@gmail.com'  
+EMAIL_HOST_PASSWORD = 'zllj iotf tthe miuf'   
+EMAIL_HOST_NAME = 'Online Course '
+DEFAULT_FROM_EMAIL = f"Online Course <{EMAIL_HOST_USER}>"
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
