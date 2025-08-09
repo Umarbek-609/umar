@@ -6,8 +6,7 @@ from utils.pagination import CustomPagination
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from django_filters.rest_framework import DjangoFilterBackend
-
+# from django_filters.rest_framework import DjangoFilterBackend
 
 
 class CourseViewSet(viewsets.ModelViewSet):
@@ -15,7 +14,7 @@ class CourseViewSet(viewsets.ModelViewSet):
     queryset = Course.objects.all()
     serializer_class = CourseSerializer
     pagination_class = CustomPagination
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    # filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['title']
     filterset_fields = ['created_at']
     
@@ -33,5 +32,10 @@ class LessonViewSet(viewsets.ModelViewSet):
     serializer_class = LessonSerializer
     permission_classes = [IsCourseOwnerOrReadOnly]
     pagination_class = CustomPagination
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    # filter_backends = [DjangoFilterBackend, filters.SearchFilter]
     search_fields = ['title']
+
+    def get_permissions(self):
+        if self.action == 'list' or self.action == 'retrieve':
+            return [permissions.AllowAny()]
+        return [IsTeacher()]
