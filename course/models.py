@@ -21,7 +21,7 @@ class Course(TranslatableModel):
     average_rating = models.FloatField(verbose_name=_("average_rating"),default=0)
 
     def __str__(self):
-        return self.safe_translation_getter('title',any_language=True)
+        return self.safe_translation_getter('title',any_language=True) or "none"
     
     def update_rating(self):
 
