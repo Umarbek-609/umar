@@ -1,21 +1,16 @@
 from .serializer import RegisterSerializer,ProfileSerializer,ResetPasswordSerializer
 from rest_framework.response import Response
 from .models import CustomUser
-from rest_framework.viewsets import ViewSet,ModelViewSet
+from rest_framework.viewsets import ModelViewSet
 from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
 from user.models import CustomUser,PasswordReset
-from rest_framework import status
-from django.contrib.auth.tokens import PasswordResetTokenGenerator
-import os
 
 class RegisterView(ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = RegisterSerializer
     
 class ProfileViewSet(ModelViewSet):
-    
     def list(self, request, *args, **kwargs):
         serializer = ProfileSerializer(request.user)
         return Response(serializer.data)
@@ -26,10 +21,8 @@ class ProfileViewSet(ModelViewSet):
         serializer.save()
         return Response({"user":"updated"})
     
-
 class ResetPassword(generics.GenericAPIView):
     serializer_class = ResetPasswordSerializer
-
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)

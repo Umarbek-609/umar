@@ -4,7 +4,6 @@ from django.core.mail import send_mail
 from django.conf import settings 
 import re
 
-
 class RegisterSerializer(serializers.ModelSerializer):
     password1 = serializers.CharField(write_only=True, min_length=8)
     password2 = serializers.CharField(write_only=True, min_length=8)
@@ -34,21 +33,10 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         return user
     
-
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['username', 'email']
-
-
-
-# class ResetPasswordSerializer(serializers.Serializer):
-#     new_password = serializers.RegexField(
-#         regex=r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$',
-#         write_only=True,
-#         error_messages={'invalid': ('Password must be at least 8 characters long with at least one capital letter and symbol')}
-#     )
-#     confirm_password = serializers.CharField(write_only=True, required=True)
 
 class ResetPasswordSerializer(serializers.Serializer):
     new_password = serializers.CharField(write_only=True)
