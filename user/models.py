@@ -17,7 +17,6 @@ class CustomUser(AbstractUser,ModelWithTimeStemp):
         self.email_verified = True
         self.save()
 
-
 class Instructor(CustomUser):
     objects = InstructorManager()
 
@@ -31,7 +30,6 @@ class Student(CustomUser):
     class Meta:
         proxy = True
         verbose_name=_("Student")
-
 
 class PasswordReset(models.Model):
     email = models.EmailField()
