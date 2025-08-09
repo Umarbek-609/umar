@@ -1,5 +1,5 @@
-from .serializer import RegisterSerializer,ProfileSerializer,ResetPasswordRequestSerializer,ResetPasswordSerializer
-from .models import CustomUser,PasswordReset
+from .serializer import RegisterSerializer,ProfileSerializer,ResetPasswordSerializer
+from .models import CustomUser
 from rest_framework.viewsets import ModelViewSet
 from rest_framework import generics
 from .serializer import PasswordResetRequestSerializer
@@ -11,6 +11,7 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.conf import settings
+
 class RegisterView(ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = RegisterSerializer

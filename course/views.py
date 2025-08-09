@@ -1,11 +1,8 @@
-from rest_framework import viewsets, permissions, filters
+from rest_framework import viewsets, permissions
 from .models import Course,Lessons
 from .serializer import CourseSerializer,LessonSerializer
 from utils.permissions import IsTeacher,IsCourseOwnerOrReadOnly
 from utils.pagination import CustomPagination
-from django.shortcuts import get_object_or_404
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 # from django_filters.rest_framework import DjangoFilterBackend
 
 
